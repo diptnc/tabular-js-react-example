@@ -4,11 +4,10 @@ import { useState, useEffect, useRef } from "react";
 /* Dummy data : used for testing */
 // import { dummyDataTable } from "../lib/dummy-data"; 
 import { addTask, deleteTask, getDataBySearchText, getMainTableData, getTaskReportByStatus, updateTask } from "../lib/functions";
-import { MdDelete } from "react-icons/md";
+import { MdAdd, MdDelete } from "react-icons/md";
 import { ReactToHtml } from "../lib/react-to-html";
 import ToastNotification from "./ToastNotification";
 import { CgClose } from "react-icons/cg";
-import Container from "./Container";
 
 
 
@@ -34,7 +33,7 @@ const Table = () => {
   useEffect(() => {
     (async () => {
       const mainTableData = await getMainTableData(20); // Fetch the data from the server
-      console.log("Fetched Data - frontend: ", mainTableData); 
+      console.log("Fetched Data - frontend: ", mainTableData);
       setTableData(mainTableData);
     })();
   }, []);
@@ -60,23 +59,23 @@ const Table = () => {
       field: "id",
       sorter: "number",
       width: 100,
-      
+
     },
     {
       title: "Task Title",
       field: "title",
-      minWidth:150,
+      minWidth: 150,
       editable: true,
       editor: "input",
-      widthGrow:2,
+      widthGrow: 2,
       // update on change
       cellEdited: handleCellEdited,
     },
     {
       title: "Task Description",
       field: "description",
-      minWidth:150,
-      widthGrow:2,
+      minWidth: 150,
+      widthGrow: 2,
 
       editable: true,
       editor: "textarea",
@@ -151,7 +150,7 @@ const Table = () => {
   useEffect(() => {
     let tableInstance = new Tabulator(tableElementRef.current, {
       data: tableData, // Assign data to table
-      layout:"fitColumns",
+      layout: "fitColumns",
       addRowPos: "top", // Add new rows to the top
       history: true, // Enable undo/redo functionality
       pagination: "local", // Enable local pagination
@@ -159,15 +158,15 @@ const Table = () => {
       paginationCounter: "rows",
       movableColumns: true, // Allow column reordering
       initialSort: [{ column: "id", dir: "asc" }], // Initial sort
-      columnDefaults: { tooltip: true ,}, // Default column settings
+      columnDefaults: { tooltip: true, }, // Default column settings
       placeholder: "No data available", // Placeholder text
       columns: columns, // Columns definition
-      autoResize:false, // prevent auto resizing of table
+      autoResize: false, // prevent auto resizing of table
 
     });
 
     // redraw the table when the window is resized as of docs ; else the table will not resize on widow resize
-    window.addEventListener('resize', function(){
+    window.addEventListener('resize', function () {
       tableInstance.redraw();
     });
 
@@ -210,41 +209,61 @@ const Table = () => {
   };
 
   return (
-    <div className="relative">
-      <Container>
-        
-      <div>
-        reports
-        <div>
-          <h3>To-do</h3>
-          <div>
-            <p>todo tasks: {getTaskReportByStatus(1).length}</p>
-            <p>Completed tasks: {getTaskReportByStatus(3).length}</p>
-            <p>in progress tasks: {getTaskReportByStatus(2).length}</p>
+    <div className="relative pt-4 space-y-4">
+
+
+      <div className="__upper-remote-section">
+
+        <div className="flex-col w-full space-y-4 ">
+          <h3 className="text-sm text-gray-500">Reports</h3>
+          <div className="grid w-full gap-2 md:grid-cols-4">
+            <div className="p-6 border border-orange-500 rounded bg-orange-50">
+              <p>Todo tasks</p>
+              <h4 className="text-2xl font-bold text-orange-500">{getTaskReportByStatus(1).length}</h4>
+            </div>
+            <div className="p-6 border border-blue-500 rounded bg-blue-50">
+              <p>In processing tasks</p>
+              <h4 className="text-2xl font-bold text-blue-500">{getTaskReportByStatus(2).length}</h4>
+            </div>
+
+
+            <div className="p-6 border border-green-500 rounded bg-green-50">
+              <p>Completed tasks</p>
+              <h4 className="text-2xl font-bold text-green-500">{getTaskReportByStatus(3).length}</h4>
+            </div>
+
+            <div className="p-6 border border-purple-500 rounded bg-purple-50">
+              <p>Total tasks</p>
+              <h4 className="text-2xl font-bold text-purple-500">{getTaskReportByStatus(0).length}</h4>
+            </div>
           </div>
         </div>
       </div>
       <div>
-        {/* filtering */}
-        <div>
+      <h3 className="py-4 text-sm text-gray-500">Filters</h3>
+        
+     
+      <div className="grid grid-cols-1 gap-4 __operation_section md:grid-cols-2">
+        <div className="__search-section">
           {/* searching */}
           <form className="flex gap-4" onSubmit={(e) => handleSearch(e)}>
-            <label htmlFor="task_search">Search</label>
-            <input type="text" name="task_search" id="task_search" placeholder="Search tasks" className="w-full p-4 border" />
-            <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Search</button>
+            <input type="text" name="task_search" id="task_search" placeholder="Search tasks" className="w-full px-4 py-2 border rounded" />
+            <button type="submit" className="px-4 py-2 font-medium text-white bg-blue-400 border border-blue-600 rounded hover:bg-blue-500">Search</button>
           </form>
         </div>
-        <div>
-          <label htmlFor="task_status">Filter by status</label>
-          <select name="task_status" id="task_status" className="w-full p-4 border" onChange={(e) => setTableData(getTaskReportByStatus(parseInt(e.target.value)))}>
+        <div className="flex items-center gap-2 __filter-section">
+          <label htmlFor="task_status" className="text-sm text-gray-500">Filter by status</label>
+          <select name="task_status" id="task_status" className="px-4 py-2 border rounded" onChange={(e) => setTableData(getTaskReportByStatus(parseInt(e.target.value)))}>
             <option value="1">To-do</option>
             <option value="2">In-progress</option>
             <option value="3">Done</option>
             <option value="0" selected>All</option>
           </select>
         </div>
+        
       </div>
-      <div><button onClick={() => setShowAddTaskModal(true)}>Add Task</button></div>
+      </div>
+      <div><button onClick={() => setShowAddTaskModal(true)} className="flex gap-2 px-4 py-2 font-medium text-white border rounded bg-violet-500 border-violet-800 hover:bg-violet-600"><MdAdd size={24}/> Add Task</button></div>
       <div ref={tableElementRef} id="main-table"></div>
       <div>
         <ToastNotification notify={notify} message={notifyMessage} setNotify={setNotify} setNotifyMessage={setNotifyMessage} />
@@ -252,7 +271,7 @@ const Table = () => {
       <div>
         {showAddTaskModal && <AddTaskModal setShowAddTaskModal={setShowAddTaskModal} handleAddTask={handleAddTask} />}
       </div>
-      </Container>
+
 
     </div>
   );

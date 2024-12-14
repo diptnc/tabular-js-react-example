@@ -1,15 +1,17 @@
 import Container from "../components/Container"
 import Table from "../components/Table"
-import ReactTableComponent from "../components/ReactTableComponent"
-// external styles
+
 
 const App = () => {
   return (
     <section className="">
       <Container>
-        <h1>Assignment Flow Launch</h1>
+        <div className="flex items-center px-4 py-2 mt-4 border rounded"> 
+          <img src="/vite.svg" className="w-10" alt="logo"/>
+        <h1 className="font-medium">Assignment</h1>
+
+        </div>
         <Table/>
-        {/* <ReactTableComponent/> */}
       </Container>
     </section>
   )
