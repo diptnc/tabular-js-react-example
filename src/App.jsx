@@ -25,6 +25,11 @@ const App = () => {
           <p>3. For resetting the table data, delete the local storage data <code>mainTableData</code></p>
         </div>
       </Container>
+      <footer className="py-2 mt-6 border-t bg-gray-50">
+        <div className="flex justify-center gap-4 px-4 py-2 text-sm text-gray-800">
+          <p>Made by <a className="text-blue-500" href="https://diptanuchakraborty.in?ref=assignment-1-flowlaunch" target="_blank" rel="noreferrer">diptanuchakraborty.in</a></p>
+        </div>
+      </footer>
     </section>
   )
 }

@@ -267,9 +267,11 @@ const Table = () => {
       </div>
       <div><button onClick={() => setShowAddTaskModal(true)} className="flex gap-2 px-4 py-2 font-medium text-white border rounded bg-violet-500 border-violet-800 hover:bg-violet-600"><MdAdd size={24}/> Add Task</button></div>
       <div ref={tableElementRef} id="main-table"></div>
-      <div>
+      {notify &&
+      <div className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-screen bg-black/10">
         <ToastNotification notify={notify} message={notifyMessage} setNotify={setNotify} setNotifyMessage={setNotifyMessage} />
       </div>
+}
       {showAddTaskModal &&
       <div className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-screen bg-black/10">
         <AddTaskModal setShowAddTaskModal={setShowAddTaskModal} handleAddTask={handleAddTask} />
