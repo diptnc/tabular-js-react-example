@@ -185,7 +185,7 @@ const Table = () => {
     }
     const data = {
 
-      id: (tableData?.length + 1)+1 || Math.floor(Math.random() * 1000),
+      id:  Math.floor(Math.random() * 1000),
       title: e.target.task_name.value,
       description: e.target.task_description.value || "",
       completed: parseInt(e.target.task_status.value) || 1,
