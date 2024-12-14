@@ -1,5 +1,8 @@
+import { BsGithub } from "react-icons/bs"
 import Container from "../components/Container"
 import Table from "../components/Table"
+import { BiAnchor } from "react-icons/bi"
+import { MdArrowOutward } from "react-icons/md"
 
 
 const App = () => {
@@ -26,6 +29,10 @@ const App = () => {
         </div>
       </Container>
       <footer className="py-2 mt-6 border-t bg-gray-50">
+          <a href="https://github.com/diptnc/tabulator-js-react-example" className="flex items-center justify-center gap-2 px-2 py-2 mx-auto text-center bg-white border rounded-full w-max" target="_blank" rel="noreferrer">
+            <BsGithub size={24}/> <span>Github</span> <MdArrowOutward />
+
+          </a>
         <div className="flex justify-center gap-4 px-4 py-2 text-sm text-gray-800">
           <p>Made by <a className="text-blue-500" href="https://diptanuchakraborty.in?ref=assignment-1-flowlaunch" target="_blank" rel="noreferrer">diptanuchakraborty.in</a></p>
         </div>
