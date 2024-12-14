@@ -1,5 +1,4 @@
 import { TabulatorFull as Tabulator } from "tabulator-tables"; // Import Tabulator library
-import "tabulator-tables/dist/css/tabulator_simple.min.css"; // Import Tabulator CSS
 import { useState, useEffect, useRef } from "react";
 /* Dummy data : used for testing */
 // import { dummyDataTable } from "../lib/dummy-data"; 
@@ -7,7 +6,8 @@ import { addTask, deleteTask, getDataBySearchText, getMainTableData, getTaskRepo
 import { MdAdd, MdDelete } from "react-icons/md";
 import { ReactToHtml } from "../lib/react-to-html";
 import ToastNotification from "./ToastNotification";
-import { CgClose } from "react-icons/cg";
+import { IoChevronDownOutline } from "react-icons/io5";
+import AddTaskModal from "./AddTaskModal";
 
 
 
@@ -118,7 +118,9 @@ const Table = () => {
             break;
         }
 
-        return `<div class="${cellClassNames} p-2 font-medium">${cellValue}</div>`;
+        // return `<div class="${cellClassNames} p-2 font-medium h-full">${cellValue}</div>`;
+        return ReactToHtml(<div className={`${cellClassNames} p-2 font-medium h-full flex gap-2 items-center justify-between`}><span>{cellValue} </span> <span><IoChevronDownOutline />
+</span></div>);
       },
     },
 
@@ -209,7 +211,7 @@ const Table = () => {
   };
 
   return (
-    <div className="relative pt-4 space-y-4">
+    <div className="flex flex-col gap-6 pt-4">
 
 
       <div className="__upper-remote-section">
@@ -268,10 +270,11 @@ const Table = () => {
       <div>
         <ToastNotification notify={notify} message={notifyMessage} setNotify={setNotify} setNotifyMessage={setNotifyMessage} />
       </div>
-      <div>
-        {showAddTaskModal && <AddTaskModal setShowAddTaskModal={setShowAddTaskModal} handleAddTask={handleAddTask} />}
+      {showAddTaskModal &&
+      <div className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-screen bg-black/10">
+        <AddTaskModal setShowAddTaskModal={setShowAddTaskModal} handleAddTask={handleAddTask} />
       </div>
-
+    }
 
     </div>
   );
@@ -279,36 +282,3 @@ const Table = () => {
 
 export default Table;
 
-
-const AddTaskModal = ({ setShowAddTaskModal, handleAddTask }) => {
-
-  return (
-    <div className="w-full max-w-md p-4 border rounded bg-gray-50">
-      <div><CgClose onClick={() => setShowAddTaskModal(false)} className="text-gray-500 cursor-pointer hover:text-red-500" /></div>
-      <h3>Add Task</h3>
-      <form method="post" onSubmit={(e) => handleAddTask(e)} className="flex flex-col gap-4">
-        <div>
-          <label htmlFor="task_name" >Task Name</label>
-          <input type="text" name="task_name" id="task_name" placeholder="Enter the task name" className="w-full p-4 border" required />
-        </div>
-        <div>
-          <label htmlFor="task_description">Task Description</label>
-          <textarea name="task_description" id="task_description" rows="5" placeholder="Enter the task description" className="w-full p-4 border"></textarea>
-        </div>
-        <div>
-          <label htmlFor="task_status">Task Status</label>
-          <select name="task_status" id="task_status" className="w-full p-4 border">
-            <option value="1">To-do</option>
-            <option value="2">In-progress</option>
-            <option value="3">Done</option>
-          </select>
-        </div>
-        <div className="flex justify-end gap-4">
-          <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Add Task</button>
-          <button onClick={() => setShowAddTaskModal(false)} className="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700">Cancel</button>
-        </div>
-
-      </form>
-    </div>
-  )
-}

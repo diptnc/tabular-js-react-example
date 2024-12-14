@@ -5,3 +5,23 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+/* tabulator css */
+
+
+
+  .tabulator {
+   border: 1px solid #cdcdcd;
+   border-radius: 5px;
+  }
+  div[tabulator-field="completed"]{
+    @apply !p-0 ;
+  } 
+.tabulator-header{
+  @apply !font-medium !text-gray-800 ;
+
+}
+
+.tabulator-row.tabulator-selectable:hover{
+  @apply !bg-gray-100 !text-gray-800 ;
+}
