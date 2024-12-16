@@ -17,6 +17,9 @@
   div[tabulator-field="completed"]{
     @apply !p-0 ;
   } 
+  .tabulator-footer-contents{
+    @apply flex-wrap ;
+  }
 .tabulator-header{
   @apply !font-medium !text-gray-800 ;
 
