@@ -3,6 +3,7 @@ import Container from "../components/Container"
 import Table from "../components/Table"
 import { BiAnchor } from "react-icons/bi"
 import { MdArrowOutward } from "react-icons/md"
+import ResetLocalStorage from "../components/ResetLocalStorage"
 
 
 const App = () => {
@@ -26,6 +27,10 @@ const App = () => {
           <p>1. This is a project to learn and explore Tabulator js</p>
           <p className="hyphens-auto ">2. Data is fetched from the api <code className="break-words hyphens-auto">https://jsonplaceholder.typicode.com/todos</code> on 1st run. The data is then stored in local storage and used for the table.</p>
           <p>3. For resetting the table data, delete the local storage data <code>mainTableData</code></p>
+        </div>
+        <div className="">
+          <ResetLocalStorage/>
+          
         </div>
       </Container>
       <footer className="py-2 mt-6 border-t bg-gray-50">
